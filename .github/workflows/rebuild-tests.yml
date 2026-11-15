@@ -13,5 +13,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate ISBN catalog logic
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.mjs
+          node --check catalog.mjs
+          node --check sw.js
+      - name: Test ISBN catalog logic
         run: node --test catalog.test.mjs
+      - name: Install headless test browser
+        run: |
+          npm install --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Test full mobile app
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/mybookshelf-server.log 2>&1 &
+          sleep 2
+          node smoke.test.mjs
