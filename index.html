@@ -1,75 +1,112 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f0fb"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><title>MyBookshelf</title><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="icon.svg"><link rel="apple-touch-icon" href="icon.svg">
-<style>
-*{box-sizing:border-box}body{margin:0;font:16px system-ui;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}body[data-theme=enchanted]{--bg:#171025;--panel:#312044;--accent:#d4a9ff;--text:#fff0ff;--shelf:#654172}body[data-theme=academia]{--bg:#20170f;--panel:#3b2a1d;--accent:#e3bf77;--text:#f8e9d0;--shelf:#765033}body[data-theme=cottage]{--bg:#f4eddf;--panel:#e1ead9;--accent:#426f4e;--text:#30432c;--shelf:#b18b61}body[data-theme=celestial]{--bg:#0b1430;--panel:#1b2d57;--accent:#b9c8ff;--text:#eaf1ff;--shelf:#3a4d85}body[data-theme=ocean]{--bg:#062e3b;--panel:#135568;--accent:#8de5e0;--text:#e5ffff;--shelf:#278b9c}body[data-theme=forest]{--bg:#10291b;--panel:#27553a;--accent:#b4d78c;--text:#f0ffea;--shelf:#5b7650}header{padding:20px 16px;display:flex;justify-content:space-between;align-items:center;background:var(--panel)}h1{margin:0;font-family:Georgia,serif;font-size:26px}main{max-width:900px;margin:auto;padding:16px 16px 90px}.hero{background:linear-gradient(140deg,var(--panel),var(--bg));border:1px solid var(--accent);border-radius:22px;padding:24px;margin-bottom:22px;position:relative;overflow:hidden}.hero:after{content:'✦ ☾ ✧';position:absolute;right:20px;top:20px;color:var(--accent);opacity:.6;font-size:35px}.hero h2{font:32px Georgia,serif;max-width:300px}.hero p{max-width:350px}.btn{background:var(--accent);color:var(--bg);border:0;border-radius:12px;padding:12px 18px;font-weight:700}.ghost{background:var(--panel);color:var(--text);border:1px solid var(--accent);border-radius:12px;padding:10px}.tools{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}input,select,textarea{background:var(--panel);color:var(--text);border:1px solid var(--accent);border-radius:10px;padding:11px;max-width:100%}input[type=search]{flex:1;min-width:180px}.stats{display:flex;gap:12px;flex-wrap:wrap}.stat{background:var(--panel);border-radius:14px;padding:15px;flex:1;min-width:100px}.stat strong{font-size:26px;display:block}.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:15px;padding:20px 8px 26px;border-bottom:14px solid var(--shelf);border-radius:6px;background:linear-gradient(transparent 95%,var(--panel))}.book{min-width:0;text-align:center;cursor:pointer}.book img,.placeholder{width:100%;aspect-ratio:2/3;object-fit:cover;box-shadow:6px 8px 12px #0007;border-radius:3px}.placeholder{display:grid;place-items:center;background:var(--panel);padding:8px;font:18px Georgia,serif}.book small{display:block;margin-top:9px;overflow-wrap:anywhere}dialog{background:var(--bg);color:var(--text);border:1px solid var(--accent);border-radius:20px;width:min(94vw,480px);max-height:90vh;overflow:auto}dialog::backdrop{background:#000b}form{display:grid;gap:10px}label{display:grid;gap:5px}footer{position:fixed;bottom:0;left:0;right:0;background:var(--panel);display:flex;justify-content:space-around;padding:10px}footer button{background:none;border:0;color:var(--text);padding:9px}.notice{font-size:13px;opacity:.85}#reader{width:100%;min-height:160px}.hidden{display:none!important}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#241334">
+<meta name="description" content="Your own magical world of books. Scan, collect and track your reading.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./app.css">
+<title>MyBookshelf · Your Story, Your World</title>
+</head>
+<body data-theme="enchanted">
+<svg class="svg-icons" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-7 9 7v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-3.7-2.2-7.2-2.2-10-1v14c3.8-1 7.3-.6 10 1.4 2.7-2 6.2-2.4 10-1.4V5c-2.8-1.2-6.3-1.2-10 1zm0 0v14"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3M4 12h16M8 9v6m3-7v8m3-8v8m3-7v6"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v8a5 5 0 0 1-10 0zM7 6H3v3c0 3 2 5 5 5m9-8h4v3c0 3-2 5-5 5M12 17v4m-5 0h10"/></symbol>
+  <symbol id="i-profile" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-7 8-7s8 2 8 7"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 1 2.5 8.5L23 12l-8.5 2.5L12 23l-2.5-8.5L1 12l8.5-2.5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 19v2h16v-2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 17V4m-5 5 5-5 5 5M4 19v2h16v-2"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2m0-16-2 2M6 18l-2 2"/></symbol>
+</svg>
+<div class="app" id="app">
+ <div class="scene-art" id="sceneArt" aria-hidden="true"></div>
+ <div class="app-shade" aria-hidden="true"></div>
+ <div class="app-inner">
+  <header class="topbar">
+   <button class="brand" id="goHome" aria-label="MyBookshelf home"><span class="brand-mini">THE <span>✦</span> PERSONAL LIBRARY</span><span class="brand-name">My Library</span></button>
+   <div class="head-actions"><button class="icon-button" id="searchButton" aria-label="Search books"><svg><use href="#i-search"/></svg></button><button class="icon-button" id="settingsButton" aria-label="Choose theme and settings"><svg><use href="#i-settings"/></svg></button></div>
+  </header>
+  <div class="top-divider"><span>✦</span><span>✦</span><span>✦</span></div>
+  <main id="screen">
+    <section id="homeScreen" class="screen">
+     <div class="intro"><div class="eyebrow" id="themeEyebrow">✦ A WORLD OF STORIES ✦</div><h1 id="welcomeTitle">Every book is a doorway.</h1><p id="welcomeDesc">Build a collection as magical as the stories inside.</p></div>
+     <div class="filter-strip" id="homeFilters" role="tablist" aria-label="Filter books">
+      <button data-filter="all" class="active" role="tab" aria-selected="true">All Books</button><button data-filter="reading" role="tab" aria-selected="false">Reading</button><button data-filter="finished" role="tab" aria-selected="false">Finished</button><button data-filter="want" role="tab" aria-selected="false">Want to Read</button>
+     </div>
+     <div class="shelf-header"><div><span class="tiny-label">YOUR COLLECTION</span><h2>The Bookshelf <span id="homeCount" class="count-pill">0</span></h2></div><button class="circle-add" id="quickAdd" aria-label="Add a book"><svg><use href="#i-plus"/></svg></button></div>
+     <div id="homeShelf" class="book-shelves"></div>
+     <div id="homeEmpty" class="empty-state" hidden><div class="empty-illustration">✦<span>📖</span>✧</div><h3>Every story begins somewhere.</h3><p>Your bookshelf is waiting for its first adventure.</p><button class="primary-button" id="homeScanBtn"><svg><use href="#i-scan"/></svg> Scan your first book</button><button class="quiet-link" id="homeManualBtn">or add a book by hand</button></div>
+    </section>
 
-/* MyBookshelf illustrated edition */
-body[data-theme=enchanted]{--bg:#f8f0fb;--panel:#fffaf0;--accent:#8051a1;--text:#443451;--shelf:#aa7c58}
-body[data-theme=academia]{--bg:#f2e7d3;--panel:#fff8e8;--accent:#76502c;--text:#35291f;--shelf:#865b3c}
-body[data-theme=cottage]{--bg:#fff8e9;--panel:#f2f8e9;--accent:#567f57;--text:#39513d;--shelf:#ba9567}
-body[data-theme=celestial]{--bg:#e9edff;--panel:#fdfbff;--accent:#5b64b0;--text:#32365e;--shelf:#9a8bc5}
-body[data-theme=ocean]{--bg:#e5f9f7;--panel:#f7fffc;--accent:#2c8493;--text:#235263;--shelf:#78b5bf}
-body[data-theme=forest]{--bg:#eaf3df;--panel:#fffdf2;--accent:#487b4d;--text:#314d33;--shelf:#927a50}
-body{background:radial-gradient(ellipse at 10% 4%,#fff9 0%,transparent 42%),radial-gradient(ellipse at 95% 65%,#d9b9f433 0%,transparent 40%),var(--bg);font-family:ui-rounded,'Trebuchet MS',system-ui,sans-serif;min-height:100vh}
-header{background:#fff9;border-bottom:1px solid #d7c4e4;box-shadow:0 3px 16px #7e588018;padding:15px 18px}
-h1{font-size:24px;letter-spacing:-.6px;color:var(--accent)}
-main{padding-top:20px}
-.hero{background:linear-gradient(115deg,#fffaf2dd,#f1dfffcc),radial-gradient(circle at 80% 30%,#fff3ad,#ddc1eb);border:2px solid #d6b6e0;box-shadow:0 10px 28px #8c6a9829;border-radius:26px;min-height:215px;padding:27px 24px;position:relative}
-.hero h2{font:700 32px/1.12 Georgia,serif;color:#674477;max-width:260px;margin:0 0 10px}
-.hero p{color:#6c5971;font-size:15px;max-width:245px;line-height:1.5}
-.hero:after{content:'📚 ✨';right:12px;top:48px;font-size:65px;opacity:1;transform:rotate(-8deg);filter:drop-shadow(0 8px 6px #0002)}
-.btn{background:linear-gradient(135deg,var(--accent),#a675b4);color:white;border-radius:15px;box-shadow:0 4px 10px #563e6924}
-.ghost{background:#fff9;border-color:#d7b4e1;color:var(--text)}
-.stat{background:var(--panel);border:1px solid #d9c4df;border-radius:18px;box-shadow:0 5px 14px #4b2e5a10}
-.stat strong{color:var(--accent);font-family:Georgia,serif}
-h2{font-family:Georgia,serif}
-.shelf{border-bottom:16px solid var(--shelf);background:linear-gradient(#fff8,transparent 70%);border-radius:16px 16px 5px 5px;min-height:130px;gap:19px}
-.book img,.placeholder{box-shadow:5px 7px 9px #30203d33;border-radius:4px}
-.placeholder{background:linear-gradient(125deg,#ad81ba,#6e4a8e);color:white;min-height:160px}
-input,select,textarea{background:#fffdfb;border:1px solid #c8aed4;color:#352d42}
-dialog{background:#fff9f9;border:2px solid #cfb1dd;box-shadow:0 20px 70px #0005}
-footer{background:#fffefa;border-top:1px solid #decbe4;box-shadow:0 -4px 15px #0001}
-footer button{color:var(--accent);font-weight:700}
-body[data-theme=academia] .hero{background:linear-gradient(110deg,#f8ead1,#c7ad83)}
-body[data-theme=cottage] .hero{background:linear-gradient(110deg,#fff8d8,#cce5b8)}
-body[data-theme=celestial] .hero{background:linear-gradient(110deg,#f8f2ff,#b9c6f7)}
-body[data-theme=ocean] .hero{background:linear-gradient(110deg,#effff9,#a9e5e6)}
-body[data-theme=forest] .hero{background:linear-gradient(110deg,#f6f8dc,#b7d8a5)}
-@media(max-width:420px){.hero h2{font-size:29px}.hero:after{font-size:53px;right:10px}.hero p{max-width:205px}.stats{gap:7px}.stat{padding:12px 9px}.stat strong{font-size:24px}}
-</style></head>
-<body data-theme="enchanted"><header><h1>✦ MyBookshelf</h1><button class="ghost" id="themeButton">🎨 Themes</button></header>
-<main><section class="hero"><h2>A little magic on every shelf.</h2><p>Collect the stories you love. Make every shelf your own.</p><button class="btn" id="scanButton">▣ Scan a book</button></section>
-<section class="stats"><div class="stat"><strong id="total">0</strong>Books</div><div class="stat"><strong id="reading">0</strong>Reading</div><div class="stat"><strong id="finished">0</strong>Finished</div></section>
-<div class="tools"><input type="search" id="search" placeholder="Search your books"><select id="filter"><option value="">All books</option><option>Not Started</option><option>Reading</option><option>Finished</option><option>Want to Read</option></select><button class="btn" id="addButton">+ Add</button></div><h2>My Bookshelf</h2><div id="shelf" class="shelf"></div><p id="empty">Your story starts here. Add your first book to fill these shelves. ✨</p>
-<div class="tools"><button class="ghost" id="exportButton">Export backup</button><button class="ghost" id="importButton">Restore backup</button><input id="importFile" class="hidden" type="file" accept=".json,application/json"></div><p class="notice">Your books are saved on this device. Export a backup regularly. Google Drive automatic backup requires additional account configuration and is not yet active.</p></main>
-<footer><button id="homeNav">⌂ Home</button><button id="booksNav">▤ Books</button><button id="scanNav">▣ Scan</button><button id="themesNav">✦ Themes</button></footer>
-<dialog id="editDialog"><form id="bookForm"><h2 id="editTitle">Add a book</h2><label>ISBN <input id="isbn" inputmode="numeric" placeholder="978..."></label><button type="button" class="ghost" id="lookup">Look up ISBN</button><label>Title <input id="title" required></label><label>Author <input id="author"></label><label>Cover image URL <input id="cover" type="url"></label><label>Series <input id="series"></label><label>Status <select id="status"><option>Not Started</option><option>Reading</option><option>Finished</option><option>Want to Read</option></select></label><label>Notes <textarea id="notes" rows="3"></textarea></label><div class="tools"><button type="submit" class="btn">Save book</button><button type="button" class="ghost" id="cancelEdit">Cancel</button><button type="button" class="ghost" id="deleteBook">Delete</button></div></form></dialog>
-<dialog id="themesDialog"><h2>Choose your world</h2><div id="themes"></div><button class="ghost" id="closeThemes">Close</button></dialog>
-<dialog id="scanDialog"><h2>Scan ISBN barcode</h2><div id="reader"></div><p class="notice">Camera access requires HTTPS. If scanning isn't supported, enter the ISBN manually.</p><button class="ghost" id="manualISBN">Enter ISBN instead</button><button class="ghost" id="closeScan">Close</button></dialog>
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script><script>
-const $=id=>document.getElementById(id),key='personal-library-books',themeKey='personal-library-theme';let books=[],editing=null,scanner=null;
-try{books=JSON.parse(localStorage.getItem(key)||'[]')}catch{books=[]}
-const save=()=>{localStorage.setItem(key,JSON.stringify(books));render()};
-const themes={enchanted:'🔮 Enchanted Library',academia:'🕯 Dark Academia',cottage:'🌸 Cozy Cottage',celestial:'🌌 Celestial Library',ocean:'🐚 Oceanic Library',forest:'🌿 Forest Haven'};
-function setTheme(t){document.body.dataset.theme=t;localStorage.setItem(themeKey,t);$('themesDialog').close()}
-document.body.dataset.theme=localStorage.getItem(themeKey)||'enchanted';
-function render(){const q=$('search').value.toLowerCase(),f=$('filter').value;$('total').textContent=books.length;$('reading').textContent=books.filter(b=>b.status==='Reading').length;$('finished').textContent=books.filter(b=>b.status==='Finished').length;const shown=books.filter(b=>(!f||b.status===f)&&[b.title,b.author,b.series,b.isbn].join(' ').toLowerCase().includes(q));$('empty').hidden=books.length>0;$('shelf').replaceChildren();for(const b of shown){const el=document.createElement('div');el.className='book';const cover=b.cover?document.createElement('img'):document.createElement('div');if(b.cover){cover.src=b.cover;cover.alt='Cover of '+b.title;cover.onerror=()=>cover.replaceWith(Object.assign(document.createElement('div'),{className:'placeholder',textContent:b.title}))}else{cover.className='placeholder';cover.textContent=b.title}const label=document.createElement('small');label.textContent=b.title;el.append(cover,label);el.onclick=()=>openEdit(b.id);$('shelf').append(el)}}
-function openEdit(id=null){editing=id;const b=books.find(x=>x.id===id)||{};for(const f of ['isbn','title','author','cover','series','notes'])$(f).value=b[f]||'';$('status').value=b.status||'Not Started';$('editTitle').textContent=id?'Edit book':'Add a book';$('deleteBook').hidden=!id;$('editDialog').showModal()}
-$('bookForm').onsubmit=e=>{e.preventDefault();const b={id:editing||crypto.randomUUID(),isbn:$('isbn').value.trim(),title:$('title').value.trim(),author:$('author').value.trim(),cover:$('cover').value.trim(),series:$('series').value.trim(),notes:$('notes').value,status:$('status').value};const duplicate=books.find(x=>x.isbn&&x.isbn===b.isbn&&x.id!==b.id);if(duplicate&&!confirm('This ISBN is already in your library. Add another copy?'))return;if(editing)books=books.map(x=>x.id===editing?b:x);else books.push(b);save();$('editDialog').close()};
-$('deleteBook').onclick=()=>{if(confirm('Delete this book?')){books=books.filter(b=>b.id!==editing);save();$('editDialog').close()}};
-$('cancelEdit').onclick=()=>$('editDialog').close();
-function normalizeISBN(value){const digits=String(value||'').replace(/[^0-9X]/gi,'').toUpperCase();const matches=digits.match(/97[89][0-9]{10}|[0-9]{9}[0-9X]/g);return matches?matches[0]:digits}
-async function lookupBook(){const isbn=normalizeISBN($('isbn').value);if(!/^(97[89][0-9]{10}|[0-9]{9}[0-9X])$/.test(isbn)){alert('This barcode is not a valid 10- or 13-digit book ISBN. Try the ISBN printed near the barcode.');return}$('isbn').value=isbn;$('lookup').disabled=true;$('lookup').textContent='Searching catalogs…';let book=null;let errors=0;
-try{const r=await fetch('https://openlibrary.org/isbn/'+isbn+'.json',{cache:'no-store'});if(r.ok){const d=await r.json();if(d.title){book={title:d.title,author:'',cover:'https://covers.openlibrary.org/b/isbn/'+isbn+'-L.jpg'};if(d.authors?.length){const names=await Promise.all(d.authors.slice(0,3).map(async a=>{try{const ar=await fetch('https://openlibrary.org'+a.key+'.json');return ar.ok?(await ar.json()).name:''}catch{return''}}));book.author=names.filter(Boolean).join(', ')}}}}catch{errors++}
-if(!book){try{const r=await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:'+encodeURIComponent(isbn)+'&maxResults=1',{cache:'no-store'});if(!r.ok)throw Error('Google Books unavailable');const d=await r.json();const v=d.items?.[0]?.volumeInfo;if(v){book={title:v.title||'',author:(v.authors||[]).join(', '),cover:(v.imageLinks?.thumbnail||v.imageLinks?.smallThumbnail||'').replace(/^http:/,'https:'),series:''}}}catch{errors++}}
-if(!book){try{const r=await fetch('https://openlibrary.org/search.json?isbn='+encodeURIComponent(isbn)+'&limit=1',{cache:'no-store'});if(!r.ok)throw Error('Search unavailable');const d=await r.json();const v=d.docs?.[0];if(v)book={title:v.title||'',author:(v.author_name||[]).slice(0,3).join(', '),cover:v.cover_i?'https://covers.openlibrary.org/b/id/'+v.cover_i+'-L.jpg':''}}catch{errors++}}
-if(book&&book.title){$('title').value=book.title;$('author').value=book.author||'';$('cover').value=book.cover||'';alert('Book details retrieved. Review and save.')}else{alert(errors===3?'Book lookup services could not be reached. Check your connection or enter the title manually.':'No catalog match for ISBN '+isbn+'. You can still add the book manually.')} $('lookup').disabled=false;$('lookup').textContent='Look up ISBN'}
-$('lookup').onclick=lookupBook;
-function showThemes(){$('themesDialog').showModal()}$('themes').replaceChildren(...Object.entries(themes).map(([id,label])=>{const b=document.createElement('button');b.className='ghost';b.style.cssText='display:block;width:100%;margin:9px 0;text-align:left';b.textContent=label;b.onclick=()=>setTheme(id);return b}));
-$('themeButton').onclick=showThemes;$('themesNav').onclick=showThemes;$('closeThemes').onclick=()=>$('themesDialog').close();$('addButton').onclick=()=>openEdit();$('search').oninput=render;$('filter').onchange=render;$('homeNav').onclick=()=>scrollTo({top:0,behavior:'smooth'});$('booksNav').onclick=()=>$('shelf').scrollIntoView({behavior:'smooth'});
-async function stopScan(){if(scanner){try{await scanner.stop()}catch{}try{await scanner.clear()}catch{}scanner=null}}
-async function openScan(){$('scanDialog').showModal();if(!window.Html5Qrcode){alert('Scanner unavailable. Enter the ISBN manually.');$('scanDialog').close();openEdit();return}try{scanner=new Html5Qrcode('reader');await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:260,height:140}},async code=>{await stopScan();$('scanDialog').close();openEdit();$('isbn').value=normalizeISBN(code);lookupBook()},()=>{})}catch(e){alert('Camera unavailable. Enter the ISBN manually.');await stopScan();$('scanDialog').close();openEdit()}}
-$('scanButton').onclick=openScan;$('scanNav').onclick=openScan;$('closeScan').onclick=async()=>{await stopScan();$('scanDialog').close()};$('manualISBN').onclick=async()=>{await stopScan();$('scanDialog').close();openEdit()};
-$('exportButton').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,books,theme:document.body.dataset.theme,exported:new Date().toISOString()},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='personal-library-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
-$('importButton').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{try{const data=JSON.parse(await e.target.files[0].text());if(!Array.isArray(data.books))throw Error();if(!confirm('Restore '+data.books.length+' books? This replaces the current collection.'))return;books=data.books;save();if(themes[data.theme])setTheme(data.theme);alert('Library restored')}catch{alert('Invalid backup file')}e.target.value=''};render();
-</script></body></html>
+    <section id="booksScreen" class="screen" hidden>
+      <div class="section-hero"><div class="eyebrow">YOUR PERSONAL COLLECTION</div><h1>All Your Stories</h1><p id="booksSummary">Your favorite worlds, all in one place.</p></div>
+      <label class="search-field"><svg><use href="#i-search"/></svg><input id="booksSearch" type="search" placeholder="Search title, author or ISBN" autocomplete="off"></label>
+      <div class="filter-strip" id="bookFilters" role="tablist" aria-label="Filter collection"><button data-filter="all" class="active" role="tab" aria-selected="true">All Books</button><button data-filter="reading" role="tab" aria-selected="false">Reading</button><button data-filter="finished" role="tab" aria-selected="false">Finished</button><button data-filter="want" role="tab" aria-selected="false">Want to Read</button></div>
+      <div class="sort-row"><span id="resultsCount">0 books</span><select id="sortBooks" aria-label="Sort books"><option value="recent">Recently Added</option><option value="title">Title A–Z</option><option value="author">Author A–Z</option></select></div>
+      <div id="allShelf" class="book-shelves"></div>
+      <div id="booksEmpty" class="empty-state" hidden><div class="empty-illustration">📚</div><h3>No books found</h3><p>Try another filter or add a story to your collection.</p><button id="booksAdd" class="primary-button">Add a book</button></div>
+    </section>
+
+    <section id="challengesScreen" class="screen" hidden>
+      <div class="section-hero"><div class="eyebrow">SMALL STEPS · BIG ADVENTURES</div><h1>Reading Challenges</h1><p>Every page brings you closer to your next milestone.</p></div>
+      <div class="goal-card"><div class="goal-emblem">🏆</div><div class="eyebrow">YOUR READING GOAL</div><h2><span id="goalCompleted">0</span> <small>of</small> <span id="goalTarget">12</span> books</h2><div class="progress-track"><div id="goalProgress" class="progress-fill"></div></div><p id="goalMessage">Every book counts.</p><button id="editGoal" class="soft-button">Change my goal</button></div>
+      <h2 class="subheading">Little Milestones</h2><div class="achievement-grid" id="achievements"></div>
+    </section>
+
+    <section id="profileScreen" class="screen" hidden>
+      <div class="section-hero"><div class="eyebrow">YOUR SPACE · YOUR STORIES</div><h1>Your Library, Your Way</h1><p>Make your collection feel like home.</p></div>
+      <div class="profile-card"><div class="profile-avatar">✦</div><div><h2>My Reading World</h2><p id="profileStats">0 books collected</p></div></div>
+      <div class="settings-section"><div class="section-title"><h2>Choose Your Theme</h2><span>6 worlds to explore</span></div><div class="theme-grid" id="themeGrid"></div></div>
+      <div class="settings-section"><div class="section-title"><h2>Your Collection</h2></div><button class="settings-item" id="exportBtn"><svg><use href="#i-download"/></svg><span><b>Export backup</b><small>Save a copy of your books as a JSON file</small></span><span>›</span></button><button class="settings-item" id="importBtn"><svg><use href="#i-upload"/></svg><span><b>Restore backup</b><small>Import a previously saved collection</small></span><span>›</span></button><input id="importFile" type="file" accept="application/json,.json" hidden></div>
+      <div class="backup-notice"><b>Saved on this device</b><p>Changes are saved automatically. Google Drive sync isn't connected yet. Export a backup before deleting browser data or uninstalling the app.</p></div>
+      <div class="app-version">MyBookshelf · Rebuild v2.0 · Free & made for book lovers</div>
+    </section>
+  </main>
+ </div>
+ <nav class="bottom-nav" aria-label="Main navigation">
+  <button class="nav-item active" data-nav="home" aria-label="Home"><svg><use href="#i-home"/></svg><span>Home</span></button>
+  <button class="nav-item" data-nav="books" aria-label="My Books"><svg><use href="#i-book"/></svg><span>My Books</span></button>
+  <button class="nav-item scan-nav" data-nav="scan" aria-label="Scan a book"><span class="scan-ring"><svg><use href="#i-scan"/></svg></span><span>Scan</span></button>
+  <button class="nav-item" data-nav="challenges" aria-label="Challenges"><svg><use href="#i-trophy"/></svg><span>Challenges</span></button>
+  <button class="nav-item" data-nav="profile" aria-label="Profile and themes"><svg><use href="#i-profile"/></svg><span>Profile</span></button>
+ </nav>
+</div>
+
+<dialog id="bookDialog" class="modal book-dialog">
+ <form id="bookForm" novalidate>
+  <div class="modal-head"><div><span class="eyebrow">YOUR BOOKSHELF</span><h2 id="bookDialogTitle">Add a Book</h2></div><button type="button" class="modal-close" id="closeBook" aria-label="Close"><svg><use href="#i-close"/></svg></button></div>
+  <div class="lookup-row"><label class="input-label">ISBN<input id="fieldISBN" type="text" autocomplete="off" inputmode="numeric" placeholder="978…"></label><button type="button" class="lookup-button" id="lookupButton">Find Book</button></div>
+  <div id="lookupStatus" class="lookup-status" role="status" hidden></div>
+  <div class="book-form-grid"><div class="cover-preview" id="coverPreview"><span>📖</span></div><div class="book-fields"><label class="input-label">Title <em>*</em><input id="fieldTitle" type="text" required placeholder="Book title"></label><label class="input-label">Author<input id="fieldAuthors" type="text" placeholder="Author name"></label></div></div>
+  <label class="input-label">Cover image URL<input id="fieldCover" type="url" placeholder="https://…"></label>
+  <div class="field-pair"><label class="input-label">Series<input id="fieldSeries" type="text" placeholder="Optional"></label><label class="input-label">Year<input id="fieldYear" inputmode="numeric" type="number" min="1000" max="2100" placeholder="Published"></label></div>
+  <label class="input-label">Reading status<select id="fieldStatus"><option value="not-started">Not Started</option><option value="want">Want to Read</option><option value="reading">Reading</option><option value="finished">Finished</option></select></label>
+  <label class="input-label">Rating<select id="fieldRating"><option value="">Not rated</option><option value="1">★</option><option value="2">★★</option><option value="3">★★★</option><option value="4">★★★★</option><option value="5">★★★★★</option></select></label>
+  <label class="input-label">Notes<textarea id="fieldNotes" rows="3" placeholder="Thoughts, favorite quotes, memories…"></textarea></label>
+  <div class="modal-actions"><button type="button" id="deleteBook" class="danger-button" hidden>Delete</button><button type="submit" class="primary-button" id="saveBook">Save Book</button></div>
+ </form>
+</dialog>
+<dialog id="scanDialog" class="modal scanner-dialog">
+  <div class="modal-head"><div><span class="eyebrow">DISCOVER YOUR NEXT STORY</span><h2>Scan a Book</h2></div><button class="modal-close" id="closeScan" aria-label="Close scanner"><svg><use href="#i-close"/></svg></button></div>
+  <p class="scanner-hint">Point your camera at the ISBN barcode on the back of a book.</p>
+  <div class="camera-frame"><video id="cameraVideo" autoplay playsinline muted></video><div class="camera-overlay"><span></span><span></span><span></span><span></span></div><div class="camera-label" id="cameraStatus">Starting camera…</div></div>
+  <div class="scanner-actions"><button id="torchButton" class="soft-button" hidden>Flashlight</button><button id="manualEntry" class="primary-button">Enter ISBN manually</button></div>
+  <p class="scanner-note">Camera permission is required to scan. If camera access fails, manual entry still works.</p>
+</dialog>
+<dialog id="goalDialog" class="modal small-dialog"><form id="goalForm"><div class="modal-head"><h2>My Reading Goal</h2><button class="modal-close" type="button" id="closeGoal" aria-label="Close"><svg><use href="#i-close"/></svg></button></div><label class="input-label">Books to finish this year<input type="number" min="1" max="365" value="12" id="goalInput" required></label><button class="primary-button" type="submit">Save Goal</button></form></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script type="module" src="./app.mjs"></script>
+</body></html>
