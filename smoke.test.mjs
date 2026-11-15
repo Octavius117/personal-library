@@ -1,0 +1,57 @@
+import assert from "node:assert/strict";
+import { chromium } from 'playwright';
+
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true,permissions:[]});
+const page=await context.newPage();
+const errors=[];
+page.on('pageerror',e=>errors.push(e.message));
+page.on('response',response=>{if(response.url().startsWith('http://127.0.0.1:8765/')&&response.status()>=400)errors.push('Local asset '+response.status()+' '+response.url())});
+await page.route('https://openlibrary.org/isbn/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({title:'When the Bones Sing',isbn_13:['9780593625484'],authors:[{key:'/authors/OLTESTA'}],publish_date:'2025',publishers:['Penguin']})}));
+await page.route('https://openlibrary.org/authors/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({name:'Ginny Myers Sain'})}));
+await page.route('https://openlibrary.org/search.json**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({docs:[]})}));
+await page.route('https://www.googleapis.com/books/v1/volumes**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({items:[]})}));
+try{
+ await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+ await page.waitForFunction(()=>document.querySelector('#themeGrid .theme-choice')?.length===6);
+ assert.equal(await page.locator('body').getAttribute('data-theme'),'cottage');
+ assert.equal(await page.locator('#homeScreen').isVisible(),true);
+ assert.equal(await page.locator('#homeEmpty').isVisible(),true);
+ await page.getByRole('button',{name:'Add a book',exact:true}).first().click().catch(async()=>page.locator('#quickAdd').click());
+ await page.locator('#fieldISBN').fill('9780593625484');
+ await page.locator('#lookupButton').click();
+ await page.locator('#lookupStatus').getByText(/Found via/).waitFor({timeout:12000});
+ assert.equal(await page.locator('#fieldTitle').inputValue(),'When the Bones Sing');
+ assert.equal(await page.locator('#fieldAuthors').inputValue(),'Ginny Myers Sain');
+ await page.locator('#fieldStatus').selectOption('reading');
+ await page.locator('#saveBook').click();
+ await page.getByText('When the Bones Sing',{exact:true}).first().waitFor();
+ assert.equal(await page.locator('#homeCount').textContent(),'1');
+ await page.reload({waitUntil:'networkidle'});
+ await page.waitForFunction(()=>document.querySelector('#homeCount')?.textContent==='1');
+ await page.locator('[data-nav="profile"]').click();
+ assert.equal(await page.locator('#themeGrid .theme-choice').count(),6);
+ await page.locator('[data-theme-choice="enchanted"]').click();
+ assert.equal(await page.locator('body').getAttribute('data-theme'),'enchanted');
+ await page.locator('[data-nav="books"]').click();
+ await page.locator('#booksSearch').fill('Ginny');
+ assert.equal(await page.locator('#allShelf .book-card').count(),1);
+ await page.locator('#allShelf .book-card').first().click();
+ await page.locator('#fieldStatus').selectOption('finished');
+ await page.locator('#saveBook').click();
+ await page.locator('[data-nav="challenges"]').click();
+ assert.equal(await page.locator('#goalCompleted').textContent(),'1');
+ await page.locator('[data-nav="profile"]').click();
+ const downloadPromise=page.waitForEvent('download');
+ await page.locator('#exportBtn').click();
+ const download=await downloadPromise;assert.ok(download.suggestedFilename().endsWith('.json'));
+ await page.locator('[data-nav="scan"]').click();
+ assert.equal(await page.locator('#scanDialog').evaluate(el=>el.open),true);
+ await page.locator('#manualEntry').click();
+ assert.equal(await page.locator('#bookDialog').evaluate(el=>el.open),true);
+ await page.locator('#closeBook').click();
+ await page.screenshot({path:'/tmp/mybookshelf-test.png',fullPage:true});
+ assert.deepEqual(errors,[]);
+ console.log('UI TESTS PASSED: themed app, ISBN lookup, local save, reload, status, search, export, scan dialog.');
+}catch(e){console.error('SMOKE TEST FAILED:',e);console.error('BROWSER ERRORS:',errors);process.exitCode=1}
+finally{await context.close();await browser.close()}
