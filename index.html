@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./app.css">
+<link rel="stylesheet" href="./app.css?v=2.1.1">
 <title>MyBookshelf · Your Story, Your World</title>
 </head>
 <body data-theme="enchanted">
@@ -90,6 +90,8 @@
   <div class="modal-head"><div><span class="eyebrow">YOUR BOOKSHELF</span><h2 id="bookDialogTitle">Add a Book</h2></div><button type="button" class="modal-close" id="closeBook" aria-label="Close"><svg><use href="#i-close"/></svg></button></div>
   <div class="lookup-row"><label class="input-label">ISBN<input id="fieldISBN" type="text" autocomplete="off" inputmode="numeric" placeholder="978…"></label><button type="button" class="lookup-button" id="lookupButton">Find Book</button></div>
   <div id="lookupStatus" class="lookup-status" role="status" hidden></div>
+  <div class="title-lookup"><label class="input-label">Search by title or author<input id="searchCatalogTitle" type="search" autocomplete="off" placeholder="Book title or author"></label><button type="button" class="soft-button" id="searchCatalogButton">Search Titles</button></div>
+  <div id="titleSearchResults" class="title-search-results" aria-label="Book catalog search results" hidden></div>
   <div class="book-form-grid"><div class="cover-preview" id="coverPreview"><span>📖</span></div><div class="book-fields"><label class="input-label">Title <em>*</em><input id="fieldTitle" type="text" required placeholder="Book title"></label><label class="input-label">Author<input id="fieldAuthors" type="text" placeholder="Author name"></label></div></div>
   <label class="input-label">Cover image URL<input id="fieldCover" type="url" placeholder="https://…"></label>
   <div class="field-pair"><label class="input-label">Series<input id="fieldSeries" type="text" placeholder="Optional"></label><label class="input-label">Year<input id="fieldYear" inputmode="numeric" type="number" min="1000" max="2100" placeholder="Published"></label></div>
@@ -108,5 +110,5 @@
 </dialog>
 <dialog id="goalDialog" class="modal small-dialog"><form id="goalForm"><div class="modal-head"><h2>My Reading Goal</h2><button class="modal-close" type="button" id="closeGoal" aria-label="Close"><svg><use href="#i-close"/></svg></button></div><label class="input-label">Books to finish this year<input type="number" min="1" max="365" value="12" id="goalInput" required></label><button class="primary-button" type="submit">Save Goal</button></form></dialog>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
-<script type="module" src="./app.mjs"></script>
+<script type="module" src="./app.mjs?v=2.1.1"></script>
 </body></html>
