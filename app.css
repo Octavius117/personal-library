@@ -35,3 +35,16 @@ body[data-theme=cottage] .app-shade{background:linear-gradient(180deg,#fff8,tran
 @media(min-width:700px){.app-inner{padding-top:29px}.intro{padding:47px 10px 43px}.shelf-row{gap:40px}.book-image{width:145px}.book-shelves{padding:17px 20px 35px}.theme-grid{grid-template-columns:repeat(3,1fr)}.theme-choice{height:175px}.screen{padding-bottom:45px}}
 @media(max-width:370px){.app-inner{padding-left:11px;padding-right:11px}.filter-strip button{padding-left:7px;padding-right:7px;font-size:10px}.book-shelves{padding:5px 4px 30px}.shelf-row{gap:8px;padding-left:6px;padding-right:6px}.bottom-nav{width:calc(100% - 8px)}.nav-item{font-size:8px}.lookup-row{flex-wrap:wrap}.lookup-button{width:100%;margin-bottom:14px}.theme-choice{height:115px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Ensure each illustrated world stays visible behind the live interface. */
+.app{background:transparent}
+.scene-art{z-index:0}
+.app-shade{z-index:1}
+.app-inner{position:relative;z-index:2}
+.scene-art{pointer-events:none}
+body[data-theme=cottage] .intro,body[data-theme=cottage] .section-hero{color:#274733;text-shadow:0 1px 8px #fff}
+body[data-theme=cottage] .topbar .brand{color:#f9f3e2}
+body[data-theme=cottage] .theme-choice b{color:#fff}
+#homeShelf[hidden],#allShelf[hidden]{display:none}
+.fallback-reader{z-index:3}
+.fallback-reader video{object-fit:cover!important}
