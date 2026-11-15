@@ -7,6 +7,7 @@ try{
  await page.locator('#fieldISBN').fill('9780593625484');
  await page.locator('#lookupButton').click();
  await page.waitForFunction(()=>document.querySelector('#lookupButton')?.disabled===false,{timeout:30000});
+ const detail=await page.evaluate(async()=>{const m=await import('./catalog.mjs');return await m.lookupISBN('9780593625484')});console.log('REAL CATALOG DIAGNOSTICS',JSON.stringify(detail));
  const status=await page.locator('#lookupStatus').textContent();
  const title=await page.locator('#fieldTitle').inputValue();
  console.log(JSON.stringify({status,title}));
