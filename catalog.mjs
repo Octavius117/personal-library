@@ -75,8 +75,8 @@ async function queryOpenLibraryBooks(isbn,fetcher,timeout){
   if(!r.ok)return r;
   const d=r.data?.[key];
   if(!d?.title)return {ok:true,book:null};
-  if(d.identifiers?.isbn_13?.length&&!d.identifiers.isbn_13.some(x=>exactMatch(x,isbn)) &&
-     d.identifiers?.isbn_10?.length&&!d.identifiers.isbn_10.some(x=>exactMatch(x,isbn)))return {ok:true,book:null};
+  const identifiers=[...(d.identifiers?.isbn_13||[]),...(d.identifiers?.isbn_10||[])];
+  if(identifiers.length&&!identifiers.some(x=>exactMatch(x,isbn)))return {ok:true,book:null};
   return {ok:true,book:{isbn,title:d.title,authors:authorNames((d.authors||[]).map(a=>a.name)),
     coverUrl:coverUrl(d.cover?.large||d.cover?.medium)||null,
     publisher:d.publishers?.[0]?.name||null,year:d.publish_date||null,source:"openlibrary"}};
@@ -111,7 +111,8 @@ export async function lookupISBN(raw,{fetcher=fetch,timeout=9000,disableCache=fa
   diagnostics.push({provider:"openlibrary-books",...result3,book:undefined});
   if(result3.ok&&result3.book){if(!disableCache&&typeof localStorage!=="undefined")remember(isbn,result3.book);return {status:"found",book:result3.book}}
   const failed=diagnostics.filter(x=>!x.ok&&x.error!=="not_found");
-  if(failed.length)return {status:failed.every(x=>x.error==="rate_limited")?"rate_limited":"partial_unavailable",isbn,
+  if(failed.length)return {status:failed.every(x=>x.error==="rate_limited")?"rate_limited":
+      failed.length===diagnostics.length&&failed.every(x=>x.error==="network_error")?"network_error":"partial_unavailable",isbn,
     details:diagnostics.map(x=>({provider:x.provider,ok:x.ok,error:x.error||null,httpStatus:x.httpStatus||null}))};
   return {status:"not_found",isbn};
 }
