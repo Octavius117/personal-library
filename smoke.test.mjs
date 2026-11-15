@@ -13,11 +13,11 @@ await page.route('https://openlibrary.org/search.json**',route=>route.fulfill({s
 await page.route('https://www.googleapis.com/books/v1/volumes**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({items:[]})}));
 try{
  await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
- await page.waitForFunction(()=>document.querySelector('#themeGrid .theme-choice')?.length===6);
+ await page.waitForFunction(()=>document.querySelectorAll('#themeGrid .theme-choice').length===6);
  assert.equal(await page.locator('body').getAttribute('data-theme'),'cottage');
  assert.equal(await page.locator('#homeScreen').isVisible(),true);
  assert.equal(await page.locator('#homeEmpty').isVisible(),true);
- await page.getByRole('button',{name:'Add a book',exact:true}).first().click().catch(async()=>page.locator('#quickAdd').click());
+ await page.locator('#quickAdd').click();
  await page.locator('#fieldISBN').fill('9780593625484');
  await page.locator('#lookupButton').click();
  await page.locator('#lookupStatus').getByText(/Found via/).waitFor({timeout:12000});
