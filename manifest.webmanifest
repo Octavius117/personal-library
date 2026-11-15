@@ -1,15 +1,16 @@
 {
   "name": "MyBookshelf",
   "short_name": "MyBookshelf",
-  "description": "Your personal book collection and reading tracker",
+  "description": "Six magical worlds for your personal book collection",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#171025",
-  "theme_color": "#271638",
+  "background_color": "#211331",
+  "theme_color": "#241334",
   "icons": [
     {
-      "src": "icon.svg",
+      "src": "./icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
